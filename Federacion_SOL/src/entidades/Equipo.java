@@ -7,6 +7,7 @@ public class Equipo extends Participante {
 	private int anioinscripcion;
 	private Manager manager;
 	private Atleta[] atletas;
+	private String nombre;
 
 	public Equipo(long id, int anioinscripcion, Manager manager, Atleta[] atletas) {
 		super();
@@ -55,6 +56,7 @@ public class Equipo extends Participante {
 	@Override
 	public String toString() {
 		String ret = "";
+		 
 		ret+= "EQ"+idEquipo + ". de " + manager.getPersona().getNombre() + " (" + manager.getDireccion()+") " + atletas.length + " componentes en el equipo:\n";
 		for(Atleta a: atletas) {
 			ret += a.getId()+". " + a.getPersona().getNombre() + "(" + a.getPersona().getFechaNac().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))+ ") "
@@ -63,6 +65,24 @@ public class Equipo extends Participante {
 		ret += "Valido durante el " + anioinscripcion;
 		return ret;
 	}
+
+	public long getIdEquipo() {
+		return idEquipo;
+	}
+
+	public void setIdEquipo(long idEquipo) {
+		this.idEquipo = idEquipo;
+	}
+
+	public String getNombre() {
+		return nombre;
+	}
+
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
+
+
 
 
 }

@@ -1,5 +1,12 @@
 package utils;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.text.Normalizer;
 import java.text.Normalizer.Form;
 import java.time.LocalDate;
@@ -8,12 +15,121 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import entidades.*;
+import entidades.Categoria;
 
 /**
  *
  * @author luis
  */
 public class Utilidades {
+//Examen 7 ejercicio 2
+	/*
+	 * Método que exporta todos los colegiados a un fichero en función de su
+	 * categoría
+	 * 
+	 */
+	public static void exportarColegiados() {
+
+		try {
+			for (Colegiado c : Datos.COLEGIADOS) {
+				if (c.getCategoria() == Categoria.JUNIOR) {
+					String path = "colegiadoJunior.dat";
+					FileOutputStream fos = new FileOutputStream(path, false);
+					ObjectOutputStream escritor = new ObjectOutputStream(fos);
+					escritor.writeObject((Colegiado) c);
+
+					escritor.flush();
+					escritor.close();
+				}
+				if (c.getCategoria() == Categoria.SENIOR) {
+					String path = "colegiadoSenior.dat";
+					FileOutputStream fos = new FileOutputStream(path, false);
+
+					ObjectOutputStream escritor = new ObjectOutputStream(fos);
+					escritor.writeObject((Colegiado) c);
+					escritor.flush();
+					escritor.close();
+				}
+				if (c.getCategoria() == Categoria.ESPECIAL) {
+					String path = "colegiadoEspecial.dat";
+					FileOutputStream fos = new FileOutputStream(path, false);
+					ObjectOutputStream escritor = new ObjectOutputStream(fos);
+					escritor.writeObject((Colegiado) c);
+
+					escritor.flush();
+					escritor.close();
+				}
+			}
+		} catch (FileNotFoundException e) {
+			System.out.println("Excepcion FileNotFoundException" + e.getMessage());
+		} catch (IOException e) {
+			System.out.println("Excepcion IOException" + e.getMessage());
+		} catch (Exception e) {
+			System.out.println("Exception" + e.getMessage());
+		}
+	}
+
+	// Examen 7 ejercicio 3
+	/*
+	 * Método que importa un documento manager, determina si el mánager tiene un
+	 * equipo asignado y devuelve una cadena de caracteres con datos del manager y
+	 * del equipò
+	 * 
+	 */
+	public static String DataManagerEquipo() {
+		String ret = "";
+		File fichero = new File("manager.txt");
+		FileReader lector = null;
+		BufferedReader buffer = null;
+		try {
+			try {
+				lector = new FileReader(fichero);
+				buffer = new BufferedReader(lector);
+				String linea;
+				while ((linea = buffer.readLine()) != null) {
+					String[] datos = linea.split("\\|");
+					String idPersona = datos[0];
+					String nombreManager = datos[1];
+					String documentacionManager = datos[2];
+					String fechaNacManager = datos[3];
+					String telefonoPersona = datos[4];
+					String idManager = datos[5];
+					String telefonoManager = datos[6];
+					String direccionManager = datos[7];
+
+					for (Equipo eq : Datos.EQUIPOS) {
+						if (Long.valueOf(idManager) == eq.getManager().getId()) {
+							eq.getAtletas();
+							ret = ("D./Dña. " + nombreManager + " con NIF:NIE " + documentacionManager + " nacido el "
+									+ fechaNacManager + " representa al equipo " + eq.getNombre() + " de id"
+									+ eq.getId() + " durante el año " + eq.getAnioinscripcion()
+									+ ", el cual está formado por los siguientes atletas: \t"
+									+ eq.getAtletas().toString() + "\n");
+						}
+
+					}
+
+				}
+
+			} finally {
+				if (buffer != null) {
+					buffer.close();
+				}
+				if (lector != null) {
+					lector.close();
+				}
+			}
+		} catch (FileNotFoundException e) {
+			System.out.println("Se ha producido una FileNotFoundException" + e.getMessage());
+		} catch (IOException e) {
+			System.out.println("Se ha producido una IOException" + e.getMessage());
+		} catch (Exception e) {
+			System.out.println("Se ha producido una Exception" + e.getMessage());
+		}
+
+		return ret;
+	}
 
 	/**
 	 * Función que pide un float al usuario y valida que lo que el usuario introduce

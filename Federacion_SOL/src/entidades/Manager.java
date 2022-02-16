@@ -1,5 +1,6 @@
 package entidades;
 
+import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 
 import utils.Datos;
@@ -99,6 +100,12 @@ public class Manager {
 	public String toString() {
 		return id + " " + persona.getNombre() + "(" + persona.getNifnie() + ")" + "del año" +persona.getFechaNac()+" tlfno1: "+telefono+" tlfno2: "+persona.getTelefono()
 				;
+	}
+	//*Función data, que devulve una cadena de caracteress con todos los datos del manager con el formato indicado
+	public String data() {
+		return "" + persona.getId() + "|" + persona.getNombre() + "|" + persona.getNifnie().mostrar() + "|"
+				+ persona.getFechaNac().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")) + "|" + persona.getTelefono()
+				+ "|" + this.id + "|" + this.telefono + "|" + this.direccion;
 	}
 
 }

@@ -1,5 +1,10 @@
 package principal;
 
+import java.io.DataOutputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.util.Scanner;
 
 import entidades.*;
@@ -7,10 +12,13 @@ import utils.*;
 
 public class Principal4 {
 
+	
+	
 	public static void main(String[] args) {
 		Datos.cerrarResultados();
 		System.out.println("INICIO");
 
+		
 		Scanner in;
 		int elecc = -1;
 		Rol rol; // Examen 4 Ejercicio 3A
@@ -201,7 +209,7 @@ public class Principal4 {
 	private static void mostrarMenuGestionMedallas() {
 		System.out.println("Menú de GESTIÓN de MEDALLAS.");
 		System.out.println("Seleccione una de las siguientes opciones:");
-		System.out.println("1. Nueva Medalla\n" + "2. Ver Medallas"+ "0. Volver");
+		System.out.println("1. Nueva Medalla\n" + "2. Ver Medallas" + "0. Volver");
 	}
 
 	private static void mostrarSubmenuGestionMedallas(int elecc) {
@@ -234,41 +242,42 @@ public class Principal4 {
 			System.out.println("Se ha introducido una nueva medalla correctamente.");
 			System.out.println(nuevo);
 			break;
-	/**
-	 * No me da tiempo a realizar el ejercicio, pero entiendo que hay que hacerlo con varios bucles if
-	 * en los que se elegirá si se quiere aplicar algún filtro o no y qué filtro se quiere aplicar
-	 * finalmente cuando ya estén todos los filtros elegidos, mostrar por pantalla las medallas mediante 
-	 * un bucle for y dentro de él uno o varios bucles if que vayan aplicando las restricciones que aplicó el usuario
-	 */
-		case 2:  //opción 1.1.2
+		/**
+		 * No me da tiempo a realizar el ejercicio, pero entiendo que hay que hacerlo
+		 * con varios bucles if en los que se elegirá si se quiere aplicar algún filtro
+		 * o no y qué filtro se quiere aplicar finalmente cuando ya estén todos los
+		 * filtros elegidos, mostrar por pantalla las medallas mediante un bucle for y
+		 * dentro de él uno o varios bucles if que vayan aplicando las restricciones que
+		 * aplicó el usuario
+		 */
+		case 2: // opción 1.1.2
 			System.out.println("Ha seleccionado 1.1.2 'Ver medallas' ");
 			System.out.print("Elija un filtro 1. Por pureza \n 2. Por tipo de metal \n 3. Fecah del metal");
 			Scanner teclado = new Scanner(System.in);
 			int filtro;
 			filtro = teclado.nextInt();
-			if (filtro == 1 ) {
+			if (filtro == 1) {
 				System.out.println("Elija la pureza minima ");
-				int purezaMinima=teclado.nextInt();
+				int purezaMinima = teclado.nextInt();
 				float purezaMinimaF = purezaMinima;
-				
+
 				System.out.println("Elija la pureza máxima ");
-				int purezaMáxima=teclado.nextInt();
+				int purezaMáxima = teclado.nextInt();
 				float purezaMáximaF = purezaMáxima;
-				
+
 				System.out.println("Desea aplicar algún filtro más? S(Si) o N(No)");
-				char eleccion2 = teclado.next().charAt(0); 
-				
+				char eleccion2 = teclado.next().charAt(0);
+
 				if (eleccion2 == 'S') {
 					System.out.println("Elija otro filtro f(fecha) o t(tipo de metal)");
 					char eleccion3 = teclado.next().charAt(0);
 					if (eleccion3 == 'f') {
 						System.out.println();
-						
+
 					}
 				}
 			}
-			
-			
+
 			break;
 		default:
 		}
@@ -400,5 +409,7 @@ public class Principal4 {
 		// Por el momento siempre devolverá true
 		return true;
 	}
+	
+
 
 }
