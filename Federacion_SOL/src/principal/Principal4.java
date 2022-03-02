@@ -12,13 +12,11 @@ import utils.*;
 
 public class Principal4 {
 
-	
-	
 	public static void main(String[] args) {
 		Datos.cerrarResultados();
 		System.out.println("INICIO");
 
-		
+		Equipo.nuevoEquipo();
 		Scanner in;
 		int elecc = -1;
 		Rol rol; // Examen 4 Ejercicio 3A
@@ -295,6 +293,8 @@ public class Principal4 {
 			break;
 		case 2: // opción 2.2
 			System.out.println("Ha seleccionado INSCRIPCIÓN de EQUIPO en PRUEBA.");
+			Equipo equipo = Equipo.nuevoEquipo();
+			Equipo.inscribirenPrueba();
 			break;
 		default:
 		}
@@ -409,7 +409,5 @@ public class Principal4 {
 		// Por el momento siempre devolverá true
 		return true;
 	}
-	
-
 
 }

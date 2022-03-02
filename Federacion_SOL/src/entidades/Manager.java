@@ -4,7 +4,8 @@ import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 
 import utils.Datos;
-import validaciones.Validacion;
+import validaciones.Validaciones;
+import validaciones.Validaciones;
 
 public class Manager {
 	private long id;
@@ -14,40 +15,51 @@ public class Manager {
 	private DatosPersona persona;
 
 	public static Manager nuevoManager() {
-		Manager ret = new Manager();
-		Scanner teclado = new Scanner(System.in);
-		
-		boolean idValido = false;
+		Manager ret = null;
+		long id = -1;
+		String telefono = "";
+		String direccion = "";
+		DatosPersona dp = null;
+		Scanner in;
+		boolean valido = false;
 		do {
-		System.out.println("Introduce el id del manager: ");
-		ret.setId(teclado.nextLong());
-		Validacion.validarId(ret.id);
-		if(ret.id>0 && ret.id<500)
-			idValido = true;
-		else
-			idValido = false;
-		}while(!idValido);
-		
-		System.out.println("Introduce el teléfono del manager: ");
-		ret.setTelefono(teclado.next());
-		Validacion.validarTelefono(ret.telefono);
-		
-		boolean direccionValida = false;
+			System.out.println("Introduzca el id del nuevo mánager:");
+			in = new Scanner(System.in);
+			id = in.nextInt();
+			if (id > 0)
+				valido = true;
+			else
+				System.out.println("Valor incorrecto para el identificador.");
+		} while (!valido);
+
+		valido = false;
 		do {
-		System.out.println("Introduce la dirección del manager: ");
-		ret.setDireccion(teclado.next());
-		if(ret.direccion.length()>0 && ret.direccion.length()<100)
-			direccionValida = true;
-		else
-			direccionValida = false;
-		}while(!direccionValida);
-		ret.persona = DatosPersona.nuevaPersona();
+			in = new Scanner(System.in);
+			System.out.println("Introduzca el telefono de empresa del nuevo mánager");
+			telefono = in.nextLine();
+			valido = Validaciones.validarTelefono(telefono);
+			if (!valido)
+				System.out.println("ERROR: El valor introducido para el teéfono no es válido.");
+		} while (!valido);
+
+		valido = false;
+		do {
+			in = new Scanner(System.in);
+			System.out.println("Introduzca la dirección del nuevo mánager:");
+			direccion = in.next();
+			valido = Validaciones.validarDireccion(direccion);
+			if (!valido)
+				System.out.println("ERROR: El valor introducido para la dirección no es válido.");
+		} while (!valido);
+
+		System.out.println("Introduzca ahora los datos personales:");
+		in = new Scanner(System.in);
+		dp = DatosPersona.nuevaPersona();
+
+		ret = new Manager(id, telefono, direccion, dp);
 		return ret;
-		
-		
-		
 	}
-	
+
 	public Manager(long id, String telefono, String direccion) {
 		super();
 		this.id = id;
@@ -65,7 +77,7 @@ public class Manager {
 	}
 
 	public Manager() {
-	
+
 	}
 
 	public long getId() {
@@ -98,10 +110,12 @@ public class Manager {
 
 	@Override
 	public String toString() {
-		return id + " " + persona.getNombre() + "(" + persona.getNifnie() + ")" + "del año" +persona.getFechaNac()+" tlfno1: "+telefono+" tlfno2: "+persona.getTelefono()
-				;
+		return id + " " + persona.getNombre() + "(" + persona.getNifnie() + ")" + "del año" + persona.getFechaNac()
+				+ " tlfno1: " + telefono + " tlfno2: " + persona.getTelefono();
 	}
-	//*Función data, que devulve una cadena de caracteress con todos los datos del manager con el formato indicado
+
+	// *Función data, que devulve una cadena de caracteress con todos los datos del
+	// manager con el formato indicado
 	public String data() {
 		return "" + persona.getId() + "|" + persona.getNombre() + "|" + persona.getNifnie().mostrar() + "|"
 				+ persona.getFechaNac().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")) + "|" + persona.getTelefono()
